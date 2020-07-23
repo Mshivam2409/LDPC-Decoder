@@ -1,7 +1,5 @@
 // 6-bit ripple-carry adder
 
-`include "full_adder.v"
-
 module ripple_adder(
   input [5:0] X,
   input [5:0] Y,

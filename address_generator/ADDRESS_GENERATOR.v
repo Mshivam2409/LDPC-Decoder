@@ -22,12 +22,14 @@ module ADDRESS_GENERATOR #(
    );
 
    // Synchronous logic
-   always @(posedge clk && en) begin
-      if (reset) begin
-         out <= COUNT_FROM;
-      end
-      else begin
-         out <= out + 1;
+   always @(posedge clk) begin
+      if (en == 1'b1) begin
+         if (reset) begin
+            out <= COUNT_FROM;
+         end
+         else begin
+            out <= out + 1;
+         end
       end
    end
 endmodule

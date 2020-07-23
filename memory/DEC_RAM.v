@@ -1,0 +1,42 @@
+ //----------------------------------------------------------------------------------
+// Design Name : DEC_RAM
+// File Name  : DEC_RAM.v
+// Function  : Single port Synchronous read and write RAM to store Hard Decision
+//-----------------------------------------------------------------------------------
+
+module DEC_RAM
+#(
+  parameter DATA_WIDTH = 1 ,
+  parameter ADDR_WIDTH = 8 ,
+  parameter RAM_DEPTH  = 1 << ADDR_WIDTH
+)
+(
+  input  logic                  clk            , // Clock Input
+  input  logic [ADDR_WIDTH-1:0] address  [0:1] , // Address Input
+  input  logic [DATA_WIDTH-1:0] data_in  [0:1] , // Data Input
+  input  logic                  we       [0:1] , // Write Enable
+  input  logic                  cs       [0:1] , // Chip select
+  output  wire [DATA_WIDTH-1:0] data_out [0:1]   // Data Output
+);
+
+RAM_SP_SR_RW #(DATA_WIDTH, ADDR_WIDTH, RAM_DEPTH) dec_ram_1
+(
+  .clk      (clk),
+  .data_in  (data_in  [0]),
+  .data_out (data_out [0]),
+  .address  (address  [0]),
+  .we       (we       [0]),
+  .cs       (cs       [0])
+);
+
+RAM_SP_SR_RW #(DATA_WIDTH, ADDR_WIDTH, RAM_DEPTH) dec_ram_2
+(
+  .clk      (clk),
+  .data_in  (data_in  [1]),
+  .data_out (data_out [1]),
+  .address  (address  [1]),
+  .we       (we       [1]),
+  .cs       (cs       [1])
+);
+
+endmodule

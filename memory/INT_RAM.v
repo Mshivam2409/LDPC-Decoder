@@ -4,6 +4,7 @@
 // Function  : Single port Synchronous read and write RAMs to store Intrinsic Messages
 //-----------------------------------------------------------------------------------
 
+
 module INT_RAM 
 #(
   parameter DATA_WIDTH = 5 ,
@@ -12,13 +13,13 @@ module INT_RAM
 )
 (
   input  logic                  clk            , // Clock Input
-  input  wire [ADDR_WIDTH-1:0] address  [0:1]  , // Address Input
-  input  wire [DATA_WIDTH-1:0] data_in  [0:1] , // Data Input
-  output wire  [DATA_WIDTH-1:0] data_out [0:1] , // Data Output
+  input  logic [ADDR_WIDTH-1:0] address  [0:1] , // Address Input
+  input  logic [DATA_WIDTH-1:0] data_in  [0:1] , // Data Input
   input  logic                  we       [0:1] , // Write Enable
   input  logic                  cs       [0:1] , // Chip select
-  input  logic                  rs               // RAM Select
+  output  wire [DATA_WIDTH-1:0] data_out [0:1]   // Data Output
 );
+
   RAM_SP_SR_RW #(DATA_WIDTH, ADDR_WIDTH, RAM_DEPTH) int_ram_1
   (
     .clk      (clk),
@@ -28,6 +29,7 @@ module INT_RAM
     .we       (we       [0]),
     .cs       (cs       [0])
   );
+
   RAM_SP_SR_RW #(DATA_WIDTH, ADDR_WIDTH, RAM_DEPTH) int_ram_2
   (
     .clk      (clk),
@@ -37,4 +39,6 @@ module INT_RAM
     .we       (we       [1]),
     .cs       (cs       [1])
   );
+
+
 endmodule
